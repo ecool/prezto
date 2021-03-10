@@ -11,3 +11,16 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+if (( $+commands[exa] )); then
+  alias ls="exa -la"
+  alias la="ls"
+fi
+
+function ff(){
+  sudo find $@ 2>&1 | grep -v "Permission denied"
+}
+
+function jcurl(){
+  curl -s "$@" | json_pp | pygmentize -l json
+}

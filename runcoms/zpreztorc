@@ -37,6 +37,9 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
+  'node' \
+  'git' \
+  'python' \
   'completion' \
   'prompt'
 
@@ -45,15 +48,15 @@ zstyle ':prezto:load' pmodule \
 #
 
 # Set the query found color.
-# zstyle ':prezto:module:autosuggestions:color' found ''
+zstyle ':prezto:module:autosuggestions:color' found 'green'
 
 #
 # Completions
 #
 
 # Set the entries to ignore in static */etc/hosts* for host completion.
-# zstyle ':prezto:module:completion:*:hosts' etc-host-ignores \
-#   '0.0.0.0' '127.0.0.1'
+zstyle ':prezto:module:completion:*:hosts' etc-host-ignores \
+  '0.0.0.0' '127.0.0.1'
 
 #
 # Editor
@@ -87,10 +90,10 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 #
 
 # Set the query found color.
-# zstyle ':prezto:module:history-substring-search:color' found ''
+zstyle ':prezto:module:history-substring-search:color' found 'blue'
 
 # Set the query not found color.
-# zstyle ':prezto:module:history-substring-search:color' not-found ''
+zstyle ':prezto:module:history-substring-search:color' not-found 'red'
 
 # Set the search globbing flags.
 # zstyle ':prezto:module:history-substring-search' globbing-flags ''
@@ -116,7 +119,7 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'sorin'
+zstyle ':prezto:module:prompt' theme 'paradox'
 
 # Set the working directory prompt display length.
 # By default, it is set to 'short'. Set it to 'long' (without '~' expansion)
@@ -125,17 +128,17 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 
 # Set the prompt to display the return code along with an indicator for non-zero
 # return codes. This is not supported by all prompts.
-# zstyle ':prezto:module:prompt' show-return-val 'yes'
+zstyle ':prezto:module:prompt' show-return-val 'yes'
 
 #
 # Python
 #
 
 # Auto switch the Python virtualenv on directory change.
-# zstyle ':prezto:module:python:virtualenv' auto-switch 'yes'
+zstyle ':prezto:module:python:virtualenv' auto-switch 'yes'
 
 # Automatically initialize virtualenvwrapper if pre-requisites are met.
-# zstyle ':prezto:module:python:virtualenv' initialize 'yes'
+zstyle ':prezto:module:python:virtualenv' initialize 'yes'
 
 #
 # Ruby
@@ -159,7 +162,7 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 #
 
 # Set the SSH identities to load into the agent.
-# zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
+zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
 
 #
 # Syntax Highlighting
@@ -167,33 +170,33 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 
 # Set syntax highlighters.
 # By default, only the main highlighter is enabled.
-# zstyle ':prezto:module:syntax-highlighting' highlighters \
-#   'main' \
-#   'brackets' \
-#   'pattern' \
-#   'line' \
-#   'cursor' \
-#   'root'
+zstyle ':prezto:module:syntax-highlighting' highlighters \
+  'main' \
+  'brackets' \
+  'pattern' \
+  'line' \
+  'cursor' \
+  'root'
 #
 # Set syntax highlighting styles.
-# zstyle ':prezto:module:syntax-highlighting' styles \
-#   'builtin' 'bg=blue' \
-#   'command' 'bg=blue' \
-#   'function' 'bg=blue'
+zstyle ':prezto:module:syntax-highlighting' styles \
+  'builtin' 'fg=blue' \
+  'command' 'fg=blue' \
+  'function' 'fg=blue'
 #
 # Set syntax pattern styles.
-# zstyle ':prezto:module:syntax-highlighting' pattern \
-#   'rm*-rf*' 'fg=white,bold,bg=red'
+zstyle ':prezto:module:syntax-highlighting' pattern \
+  'rm*-rf*' 'fg=black,bold,bg=red'
 
 #
 # Terminal
 #
 
 # Auto set the tab and window titles.
-# zstyle ':prezto:module:terminal' auto-title 'yes'
+zstyle ':prezto:module:terminal' auto-title 'yes'
 
 # Set the window title format.
-# zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
+zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 
 # Set the tab title format.
 # zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
@@ -206,16 +209,16 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 #
 
 # Auto start a session when Zsh is launched in a local terminal.
-# zstyle ':prezto:module:tmux:auto-start' local 'yes'
+zstyle ':prezto:module:tmux:auto-start' local 'yes'
 
 # Auto start a session when Zsh is launched in a SSH connection.
-# zstyle ':prezto:module:tmux:auto-start' remote 'yes'
+zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 
 # Integrate with iTerm2.
 # zstyle ':prezto:module:tmux:iterm' integrate 'yes'
 
 # Set the default session name:
-# zstyle ':prezto:module:tmux:session' name 'YOUR DEFAULT SESSION NAME'
+zstyle ':prezto:module:tmux:session' name 'prezto'
 
 #
 # Utility
