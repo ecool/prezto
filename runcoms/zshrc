@@ -34,3 +34,9 @@ function ff(){
 function jcurl(){
   curl -s "$@" | json_pp | pygmentize -l json
 }
+
+if $(cat /proc/version | grep -q "microsoft"); then
+  # WSL
+  alias clip=clip.exe
+  alias nmap='"/mnt/c/Program Files (x86)/Nmap/nmap.exe"'
+fi
