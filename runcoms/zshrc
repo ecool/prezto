@@ -17,6 +17,14 @@ if (( $+commands[exa] )); then
   alias la="ls"
 fi
 
+if (( $+commands[hstr] )); then
+  # HSTR configuration - add this to ~/.zshrc
+  alias hh=hstr                    # hh to be alias for hstr
+  setopt histignorespace           # skip cmds w/ leading space from history
+  export HSTR_CONFIG=hicolor,prompt-bottom       # get more colors
+  bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
+fi
+
 function ff(){
   sudo find $@ 2>&1 | grep -v "Permission denied"
 }
