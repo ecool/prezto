@@ -25,6 +25,8 @@ if (( $+commands[hstr] )); then
   bindkey -s "\C-r" "\C-a hstr -- \C-j"     # bind hstr to Ctrl-r (for Vi mode check doc)
 fi
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 function ff(){
   sudo find $@ 2>&1 | grep -v "Permission denied"
 }
