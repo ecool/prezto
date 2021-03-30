@@ -1,0 +1,11 @@
+#
+# Authors:
+#   Eric Cool <coolazura@gmail.com>
+#
+
+# Load dependencies.
+pmodload 'helper'
+
+function prompt_terminus_setup {
+
+}
