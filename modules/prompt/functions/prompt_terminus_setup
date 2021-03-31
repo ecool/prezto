@@ -8,5 +8,7 @@
 pmodload 'helper'
 
 function prompt_terminus_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
 
 }
