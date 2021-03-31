@@ -11,4 +11,11 @@ function prompt_terminus_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
 
+
+  # Define prompts.
+  PROMPT='
+>>>
+ ${editor_info[keymap]} '
+  RPROMPT='%D{%H:%M:%S}'
+  SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
