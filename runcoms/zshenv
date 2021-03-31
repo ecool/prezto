@@ -16,3 +16,7 @@ if (( $+commands[bat] )); then
   # use seti-classic theme for bat
   export BAT_THEME="seti-classic-vscode"
 fi
+
+if [[ -a "${ZDOTDIR:-$HOME}/.proxy" ]]; then
+  source "${ZDOTDIR:-$HOME}/.proxy"
+fi
