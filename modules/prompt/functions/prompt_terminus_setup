@@ -11,11 +11,13 @@ function prompt_terminus_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
 
+  # Tell prezto we can manage this prompt
+  zstyle ':prezto:module:prompt' managed 'yes'
 
   # Define prompts.
-  PROMPT='
->>>
- ${editor_info[keymap]} '
+  PROMPT='>>> '
   RPROMPT='%D{%H:%M:%S}'
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
+
+prompt_terminus_setup "$@"
