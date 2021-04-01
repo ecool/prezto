@@ -17,6 +17,7 @@ function prompt_terminus_build_lprompt {
 function prompt_terminus_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent sp subst)
 
   # Tell prezto we can manage this prompt
   zstyle ':prezto:module:prompt' managed 'yes'
