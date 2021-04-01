@@ -105,7 +105,7 @@ Extra Steps:
   done
   ```
 
-- Add any users to `prezto` group:
+- Add any users to `prezto` group (`root`):
   - Ubuntu:  `usermod -a -G prezto user`
   - ArchLinux: `gpasswd -a user prezto`
 
