@@ -10,6 +10,10 @@
 # Load dependencies.
 pmodload 'helper'
 
+function prompt_terminus_build_lprompt {
+  print -n ">>> "
+}
+
 function prompt_terminus_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
@@ -47,7 +51,7 @@ function prompt_terminus_setup {
   zstyle ':prezto:module:python:info:virtualenv' format ' %v'
 
   # Define prompts.
-  PROMPT='>>> '
+  PROMPT='$(prompt_terminus_build_lprompt)'
   RPROMPT='%D{%H:%M:%S}'
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
