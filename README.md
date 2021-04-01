@@ -20,7 +20,7 @@ version is 4.3.11.
   2. Clone the repository:
 
      ```console
-     git clone --recursive https://github.com/ecool/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
      ```
 
   3. Create a new Zsh configuration by copying the Zsh configuration files
@@ -47,6 +47,67 @@ version is 4.3.11.
      ```
 
   5. Open a new Zsh terminal window or tab.
+
+---
+My Installation (as `root`)
+---------------
+
+  1. Launch Zsh:
+
+     ```console
+     zsh
+     ```
+
+  1. Add Group for Write Access
+
+     ```console
+     groupadd -g 2000 prezto
+     ```
+
+  2. Clone `ecool` branch to prezto location and set permissions
+
+      ```sh
+      export PREZTO_DIR=/opt/.zprezto
+      git clone -b ecool --recursive https://github.com/ecool/prezto.git "$PREZTO_DIR"
+      chown -R root:prezto $PREZTO_DIR
+      chmod -R 775 $PREZTO_DIR
+      ```
+
+  3. Add runcoms to `/etc/skel` + `/root` for default `users`/`root` and link `/opt/.zprezto` to home dirs
+
+      ```sh
+      setopt EXTENDED_GLOB
+      for rcfile in "$PREZTO_DIR"/runcoms/^README.md(.N); do
+         ln -s "$rcfile" "/etc/skel/.${rcfile:t}"
+         ln -s "$rcfile" "/root/.${rcfile:t}"
+      done
+      ln -s "$PREZTO_DIR" /etc/skel/.zprezto
+      ln -s "$PREZTO_DIR" /root/.zprezto
+      ```
+
+  4. Set Zsh as `root` default shell:
+
+     ```console
+     chsh -s /bin/zsh
+     ```
+
+  5. Open a new Zsh terminal window or tab.
+
+Extra Steps:
+
+- Add links to runcoms for any users on the system (run as each user):
+
+  ```sh
+  export PREZTO_DIR=/opt/.zprezto
+  setopt EXTENDED_GLOB
+  for rcfile in "$PREZTO_DIR"/runcoms/^README.md(.N); do
+    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+  done
+  ```
+
+- Add any users to `prezto` group:
+  - Ubuntu:  `usermod -a -G prezto user`
+  - ArchLinux: `gpasswd -a user prezto`
 
 ### Troubleshooting
 
