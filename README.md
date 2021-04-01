@@ -105,9 +105,18 @@ Extra Steps:
   done
   ```
 
+- Set default shell for user:
+
+  ```console
+  chsh -s /bin/zsh
+  ```
+
 - Add any users to `prezto` group (`root`):
-  - Ubuntu:  `usermod -a -G prezto user`
-  - ArchLinux: `gpasswd -a user prezto`
+
+  ```sh
+  usermod -a -G prezto user   # Ubuntu
+  gpasswd -a user prezto      # ArchLinux
+  ```
 
 ### Troubleshooting
 
