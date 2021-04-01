@@ -14,6 +14,10 @@ function prompt_terminus_build_lprompt {
   print -n ">>> "
 }
 
+function prompt_terminus_build_rprompt {
+  print -n "%D{%H:%M:%S}"
+}
+
 function prompt_terminus_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
@@ -53,7 +57,7 @@ function prompt_terminus_setup {
 
   # Define prompts.
   PROMPT='$(prompt_terminus_build_lprompt)'
-  RPROMPT='%D{%H:%M:%S}'
+  RPROMPT='$(prompt_terminus_build_rprompt)'
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
