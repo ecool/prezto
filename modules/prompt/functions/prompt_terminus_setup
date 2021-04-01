@@ -18,6 +18,32 @@ function prompt_terminus_build_rprompt {
   print -n "%D{%H:%M:%S}"
 }
 
+# SEE: paradox
+function prompt_terminus_preexec {
+  _prompt_terminus_start_time="$SECONDS"
+}
+
+# SEE: paradox
+function prompt_terminus_print_elapsed_time() {
+  local end_time=$(( SECONDS - _prompt_terminus_start_time ))
+  local hours minutes seconds remainder
+
+  if (( end_time >= 3600 )); then
+    hours=$(( end_time / 3600 ))
+    remainder=$(( end_time % 3600 ))
+    minutes=$(( remainder / 60 ))
+    seconds=$(( remainder % 60 ))
+    print -P "%B%F{red} ﲊ elapsed time ${hours}h ${minutes}m ${seconds}s%b"
+  elif (( end_time >= 60 )); then
+    minutes=$(( end_time / 60 ))
+    seconds=$(( end_time % 60 ))
+    print -P "%B%F{yellow} 羽elapsed time ${minutes}m ${seconds}s%b"
+  elif (( end_time > 10 )); then
+    print -P "%B%F{green} ﮫ elapsed time ${end_time}s%b"
+  fi
+}
+
+# SEE: paradox
 function prompt_terminus_precmd {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
@@ -31,6 +57,9 @@ function prompt_terminus_precmd {
   if (( $+functions[python-info] )); then
     python-info
   fi
+
+  # Calculate and print the elapsed time.
+  prompt_terminus_print_elapsed_time
 }
 
 function prompt_terminus_setup {
@@ -42,6 +71,7 @@ function prompt_terminus_setup {
   autoload -Uz add-zsh-hook
 
   # Add hook for calling precmd before each command.
+  add-zsh-hook preexec prompt_terminus_preexec
   add-zsh-hook precmd prompt_terminus_precmd
 
   # Tell prezto we can manage this prompt
@@ -77,7 +107,8 @@ function prompt_terminus_setup {
   zstyle ':prezto:module:python:info:virtualenv' format ' %v'
 
   # Define prompts.
-  PROMPT='$(prompt_terminus_build_lprompt)'
+  PROMPT='
+$(prompt_terminus_build_lprompt)'
   RPROMPT='$(prompt_terminus_build_rprompt)'
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
