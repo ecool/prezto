@@ -15,7 +15,18 @@ function prompt_terminus_build_lprompt {
 }
 
 function prompt_terminus_build_rprompt {
-  print -n "%D{%H:%M:%S}"
+  print -n "$(prompt_terminus_print_clock)%D{%H:%M:%S}"
+}
+
+function prompt_terminus_print_clock {
+  typeset -A clocks
+  clocks=(1 "" 2 "" 3 "" 4 "" 5 "" 6 "" 7 "" 8 "" 9 "" 10 "" 11 "" 12 "")
+
+  # Get the current hour in a 12hour format.
+  local hour=$(date +"%-I")
+
+  # Print the clock icon.
+  print -n "%B${clocks[$hour]}%b"
 }
 
 # SEE: paradox
