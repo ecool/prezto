@@ -10,23 +10,85 @@
 # Load dependencies.
 pmodload 'helper'
 
+# Define variables. SEE: paradox
+_prompt_terminus_current_bg='NONE'
+_prompt_terminus_segment_lseparator=''
+_prompt_terminus_segment_rseparator=''
+_prompt_terminus_start_time=$SECONDS
+_prompt_terminus_clocks=("" "" "" "" "" "" "" "" "" "" "" "")
+
+function prompt_terminus_print_separator {
+  local side
+  side=$1
+  if [[ "$side" == "left" ]]; then
+    print -n "$_prompt_terminus_segment_lseparator"
+  elif [[ "$side" == "right" ]]; then
+    print -n "$_prompt_terminus_segment_rseparator"
+  fi
+}
+
+# SEE: paradox
+function prompt_terminus_start_segment {
+  local side bg fg
+  side=$1
+  [[ -n "$2" ]] && bg="%K{$2}" || bg="%k"
+  [[ -n "$3" ]] && fg="%F{$3}" || fg="%f"
+  if [[ "$side" == "left" ]]; then
+    if [[ "$_prompt_terminus_current_bg" != 'NONE' && "$2" != "$_prompt_terminus_current_bg" ]]; then
+      print -n " $bg%F{$_prompt_terminus_current_bg}"
+      print -n "$(prompt_terminus_print_separator $side)"
+      print -n "$fg "
+    else
+      print -n "$bg$fg "
+    fi
+  else
+    print -n "%F{$2}$(prompt_terminus_print_separator $side)"
+    print -n "$bg$fg "
+  fi
+  _prompt_terminus_current_bg="$2"
+  [[ -n "$4" ]] && print -n "$4"
+}
+
+# SEE: paradox
+function prompt_terminus_end_segment {
+  # local side
+  # side=$1
+  if [[ -n "$_prompt_terminus_current_bg" ]]; then
+    print -n " %k%F{$_prompt_terminus_current_bg}"
+    print -n "$(prompt_terminus_print_separator left)"
+  else
+    print -n "%k"
+  fi
+  print -n "%f"
+  _prompt_terminus_current_bg=""
+}
+
+# SEE: paradox
 function prompt_terminus_build_lprompt {
-  print -n "${editor_info[keymap]} "
+  prompt_terminus_start_segment left black default "%(?::%F{red}✘ )%(!:%F{yellow}⚡ :)%(1j:%F{cyan}⚙ :)%F{blue}%n%F{red}@%F{green}%m%f"
+  prompt_terminus_start_segment left blue black "$(prompt-pwd)"
+
+  if [[ -n "$git_info" ]]; then
+    prompt_terminus_start_segment left green black "${(e)git_info[ref]}${(e)git_info[status]}"
+  fi
+
+  if [[ -n "$python_info" ]]; then
+    prompt_terminus_start_segment left white black "${(e)python_info[virtualenv]}"
+  fi
+
+  prompt_terminus_end_segment
 }
 
 function prompt_terminus_build_rprompt {
-  print -n "$(prompt_terminus_print_clock)%D{%H:%M:%S}"
+  prompt_terminus_start_segment right black default "$(prompt_terminus_print_clock) %D{%H:%M:%S} "
 }
 
 function prompt_terminus_print_clock {
-  typeset -A clocks
-  clocks=(1 "" 2 "" 3 "" 4 "" 5 "" 6 "" 7 "" 8 "" 9 "" 10 "" 11 "" 12 "")
-
   # Get the current hour in a 12hour format.
   local hour=$(date +"%-I")
 
   # Print the clock icon.
-  print -n "%B${clocks[$hour]}%b"
+  print -n "%B${_prompt_terminus_clocks[$hour]}%b"
 }
 
 # SEE: paradox
@@ -119,7 +181,8 @@ function prompt_terminus_setup {
 
   # Define prompts.
   PROMPT='
-$(prompt_terminus_build_lprompt)'
+$(prompt_terminus_build_lprompt)
+ ${editor_info[keymap]} '
   RPROMPT='$(prompt_terminus_build_rprompt)'
   SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
