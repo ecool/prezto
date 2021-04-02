@@ -11,7 +11,7 @@
 pmodload 'helper'
 
 function prompt_terminus_build_lprompt {
-  print -n ">>> "
+  print -n "${editor_info[keymap]} "
 }
 
 function prompt_terminus_build_rprompt {
