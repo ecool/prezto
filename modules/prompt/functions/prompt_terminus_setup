@@ -61,9 +61,28 @@ function prompt_terminus_end_segment {
   _prompt_terminus_current_bg=""
 }
 
+function prompt_terminus_print_icon {
+  local distro
+  distro=$(sed -nr '{/ID=/p}' /etc/os-release | sed -n 1p | sed 's/=/ /g' | awk '{print $2}')
+
+  # Check if distro is under WSL
+  if $(cat /proc/version | grep -iq "microsoft"); then
+    print -n "%F{blue}%f "
+  fi
+
+  # Check for my commonly used distros and print icons
+  if [[ $distro == "arch" ]]; then
+    print -n "%F{blue}%f "
+  elif [[ $distro == "ubuntu" ]]; then
+    print -n "%F{yellow}%f "
+  else
+    print -n "%F{magenta}%f "
+  fi
+}
+
 # SEE: paradox
 function prompt_terminus_build_lprompt {
-  prompt_terminus_start_segment left black default "%(!:%F{yellow}⚡ :)%(1j:%F{cyan}⚙ :)%F{blue}%n%F{red}@%F{green}%m%f"
+  prompt_terminus_start_segment left black default "%(!:%F{yellow}⚡ :)%(1j:%F{cyan}⚙ :)$(prompt_terminus_print_icon)%F{blue}%n%F{red}@%F{green}%m%f"
   prompt_terminus_start_segment left blue black "$(prompt-pwd)"
 
   if [[ -n "$git_info" ]]; then
