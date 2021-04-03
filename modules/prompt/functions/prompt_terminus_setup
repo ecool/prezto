@@ -90,7 +90,7 @@ function prompt_terminus_build_lprompt {
   fi
 
   if [[ -n "$python_info" ]]; then
-    prompt_terminus_start_segment left white black "${(e)python_info[virtualenv]}"
+    prompt_terminus_start_segment left magenta black "${(e)python_info[virtualenv]}"
   fi
 
   prompt_terminus_end_segment
