@@ -13,7 +13,7 @@ fi
 # Customize to your needs...
 
 if (( $+commands[exa] )); then
-  alias ls="exa -la"
+  alias ls="exa -la --header --git --group"
   alias la="ls"
 fi
 
