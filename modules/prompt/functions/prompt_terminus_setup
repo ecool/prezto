@@ -51,8 +51,6 @@ function prompt_terminus_start_segment {
 
 # SEE: paradox
 function prompt_terminus_end_segment {
-  # local side
-  # side=$1
   if [[ -n "$_prompt_terminus_current_bg" ]]; then
     print -n " %k%F{$_prompt_terminus_current_bg}"
     print -n "$(prompt_terminus_print_separator left)"
@@ -65,7 +63,7 @@ function prompt_terminus_end_segment {
 
 # SEE: paradox
 function prompt_terminus_build_lprompt {
-  prompt_terminus_start_segment left black default "%(?::%F{red}✘ )%(!:%F{yellow}⚡ :)%(1j:%F{cyan}⚙ :)%F{blue}%n%F{red}@%F{green}%m%f"
+  prompt_terminus_start_segment left black default "%(!:%F{yellow}⚡ :)%(1j:%F{cyan}⚙ :)%F{blue}%n%F{red}@%F{green}%m%f"
   prompt_terminus_start_segment left blue black "$(prompt-pwd)"
 
   if [[ -n "$git_info" ]]; then
@@ -80,6 +78,12 @@ function prompt_terminus_build_lprompt {
 }
 
 function prompt_terminus_build_rprompt {
+  if [ $? -ne 0 ];then
+    prompt_terminus_start_segment right red black " "
+  else
+    prompt_terminus_start_segment right green black " "
+  fi
+  prompt_terminus_start_segment right magenta black "!%h "
   prompt_terminus_start_segment right black default "$(prompt_terminus_print_clock) %D{%H:%M:%S} "
 }
 
