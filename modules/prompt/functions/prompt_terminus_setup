@@ -129,13 +129,13 @@ function prompt_terminus_print_elapsed_time() {
     remainder=$(( end_time % 3600 ))
     minutes=$(( remainder / 60 ))
     seconds=$(( remainder % 60 ))
-    print -P "%B%F{red} ﲊ elapsed time ${hours}h ${minutes}m ${seconds}s%b"
+    print -P "%B%F{red} ﲊ elapsed time ${hours}h ${minutes}m ${seconds}s%f%b"
   elif (( end_time >= 60 )); then
     minutes=$(( end_time / 60 ))
     seconds=$(( end_time % 60 ))
-    print -P "%B%F{yellow} 羽 elapsed time ${minutes}m ${seconds}s%b"
+    print -P "%B%F{yellow} 羽 elapsed time ${minutes}m ${seconds}s%f%b"
   elif (( end_time > 10 )); then
-    print -P "%B%F{green} ﮫ elapsed time ${end_time}s%b"
+    print -P "%B%F{green} ﮫ elapsed time ${end_time}s%f%b"
   fi
 }
 
