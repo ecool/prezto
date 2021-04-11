@@ -40,3 +40,9 @@ if $(cat /proc/version | grep -q "microsoft"); then
   alias clip=clip.exe
   alias nmap='"/mnt/c/Program Files (x86)/Nmap/nmap.exe"'
 fi
+
+[ -f /usr/local/bin/virtualenvwrapper.sh]; then
+  export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+  export WORKON_HOME=$HOME/.virtualenvs
+  source /usr/local/bin/virtualenvwrapper.sh
+fi
