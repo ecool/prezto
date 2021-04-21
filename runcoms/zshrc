@@ -39,6 +39,7 @@ if $(cat /proc/version | grep -q "microsoft"); then
   # WSL
   alias clip=clip.exe
   alias nmap='"/mnt/c/Program Files (x86)/Nmap/nmap.exe"'
+  export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
 fi
 
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
