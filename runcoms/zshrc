@@ -14,7 +14,7 @@ fi
 
 if (( $+commands[exa] )); then
   alias ls="exa -la --header --git --group"
-  alias la="ls"
+  alias la="ls -la"
 fi
 
 if (( $+commands[hstr] )); then
