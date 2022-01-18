@@ -81,12 +81,12 @@ My Installation (as `root`)
 
       ```sh
       setopt EXTENDED_GLOB
-      for rcfile in "$PREZTO_DIR"/runcoms/^README.md(.N); do
-         ln -s "$rcfile" "/etc/skel/.${rcfile:t}"
-         ln -s "$rcfile" "/root/.${rcfile:t}"
-      done
       ln -s "$PREZTO_DIR" /etc/skel/.zprezto
       ln -s "$PREZTO_DIR" /root/.zprezto
+      for rcfile in "$PREZTO_DIR"/runcoms/^README.md(.N); do
+         ln -s "/etc/skel/.zprezto/runcoms/$rcfile" "/etc/skel/.${rcfile:t}"
+         ln -s "/root/.zprezto/runcoms/$rcfile" "/root/.${rcfile:t}"
+      done
       ```
 
   4. Set Zsh as `root` default shell:
@@ -104,7 +104,8 @@ Extra Steps:
   ```sh
   export PREZTO_DIR=/opt/.zprezto
   setopt EXTENDED_GLOB
-  for rcfile in "$PREZTO_DIR"/runcoms/^README.md(.N); do
+  ln -s "$PREZTO_DIR" "${ZDOTDIR:-$HOME}"/.zprezto
+  for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
     ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
   done
   ```

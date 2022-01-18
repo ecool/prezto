@@ -20,3 +20,8 @@ fi
 if [[ -a "${ZDOTDIR:-$HOME}/.proxy" ]]; then
   source "${ZDOTDIR:-$HOME}/.proxy"
 fi
+
+if (( $+commands[emacs] )); then
+  path+=("${ZDOTDIR:-$HOME}/.emacs.d/bin")
+  export PATH
+fi
