@@ -80,12 +80,19 @@ My Installation (as `root`)
   3. Add runcoms to `/etc/skel` + `/root` for default `users`/`root` and link `/opt/.zprezto` to home dirs
 
       ```sh
+      export PREZTO_DIR=/opt/.zprezto
       setopt EXTENDED_GLOB
-      ln -s "$PREZTO_DIR" /etc/skel/.zprezto
+      
+      cd /root
       ln -s "$PREZTO_DIR" /root/.zprezto
       for rcfile in "$PREZTO_DIR"/runcoms/^README.md(.N); do
-         ln -s "/etc/skel/.zprezto/runcoms/$rcfile" "/etc/skel/.${rcfile:t}"
-         ln -s "/root/.zprezto/runcoms/$rcfile" "/root/.${rcfile:t}"
+         ln -s ".zprezto/runcoms/${rcfile:t}" "/root/.${rcfile:t}"
+      done
+      
+      cd /etc/skel
+      ln -s "$PREZTO_DIR" /etc/skel/.zprezto
+      for rcfile in /etc/skel/.zprezto/runcoms/^README.md(.N); do
+        ln -s ".zprezto/runcoms/${rcfile:t}" ".${rcfile:t}"
       done
       ```
 
