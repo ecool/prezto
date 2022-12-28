@@ -63,11 +63,21 @@ function prompt_terminus_end_segment {
 
 function prompt_terminus_print_icon {
   local distro
-  distro=$(sed -nr '{/ID=/p}' /etc/os-release | sed -n 1p | sed 's/=/ /g' | awk '{print $2}')
+  if [ -e /etc/os-release ]; then
+    distro=$(sed -nr '{/ID=/p}' /etc/os-release | sed -n 1p | sed 's/=/ /g' | awk '{print $2}')
+  fi
+
+  if sw_vers >/dev/null 2>&1; then
+    distro="macos"
+  fi
 
   # Check if distro is under WSL
-  if $(cat /proc/version | grep -iq "microsoft"); then
-    print -n "%F{blue}%f "
+  if [ -e /proc ]; then
+    if [ -e /proc/version ]; then
+      if $(cat /proc/version | grep -iq "microsoft"); then
+        print -n "%F{blue}%f "
+      fi
+    fi
   fi
 
   # Check for my commonly used distros and print icons
@@ -75,6 +85,8 @@ function prompt_terminus_print_icon {
     print -n "%F{blue}%f "
   elif [[ $distro == "ubuntu" ]]; then
     print -n "%F{yellow}%f "
+  elif [[ $distro == "macos" ]]; then
+    print -n "%F{white}%f "
   else
     print -n "%F{magenta}%f "
   fi
