@@ -25,3 +25,18 @@ if (( $+commands[emacs] )); then
   path+=("${ZDOTDIR:-$HOME}/.emacs.d/bin")
   export PATH
 fi
+
+if [ -d "${ZDOTDIR:-$HOME}/.ghcup" ]; then
+  path+=("${ZDOTDIR:-$HOME}/.ghcup/bin")
+  export PATH
+fi
+
+if [ -d "${ZDOTDIR:-$HOME}/.dotnet/tools" ]; then
+  path+=("${ZDOTDIR:-$HOME}/.dotnet/tools")
+  export PATH
+fi
+
+if [[ -a "${ZDOTDIR:-$HOME}/.environment" ]]; then
+  # source system specific environment variables
+  source "${ZDOTDIR:-$HOME}/.environment"
+fi
