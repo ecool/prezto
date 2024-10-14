@@ -37,6 +37,15 @@ if [ -d "${ZDOTDIR:-$HOME}/.dotnet/tools" ]; then
 fi
 
 if [[ -a "${ZDOTDIR:-$HOME}/.environment" ]]; then
-  # source system specific environment variables
+  # source system specific environment variables and computer specific configuration
   source "${ZDOTDIR:-$HOME}/.environment"
+fi
+
+# Tell things to sort by C
+export LC_COLLATE=C
+
+if (( $+commands[delta] )); then
+  function diff() {
+    cat "$1" | delta
+  }
 fi

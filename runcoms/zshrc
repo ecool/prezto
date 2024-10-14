@@ -12,6 +12,10 @@ fi
 
 # Customize to your needs...
 
+if (( $+commands[batman] )); then
+  alias man="batman $@"
+fi
+
 if (( $+commands[exa] )); then
   alias ls="exa -la --header --git --group"
   alias la="ls -la"
@@ -46,4 +50,29 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
   export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
   export WORKON_HOME=$HOME/.virtualenvs
   source /usr/local/bin/virtualenvwrapper.sh
+fi
+
+if (( $+commands[grc] )); then
+  alias ps="command grc ps"
+fi
+
+
+if (( $+commands[dotnet] )); then
+  # zsh parameter completion for the dotnet CLI
+  _dotnet_zsh_complete()
+  {
+    local completions=("$(dotnet complete "$words")")
+
+    # If the completion list is empty, just continue with filename selection
+    if [ -z "$completions" ]
+    then
+      _arguments '*::arguments: _normal'
+      return
+    fi
+
+    # This is not a variable assignment, don't remove spaces!
+    _values = "${(ps:\n:)completions}"
+  }
+
+  compdef _dotnet_zsh_complete dotnet
 fi
