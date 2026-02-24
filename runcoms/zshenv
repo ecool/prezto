@@ -41,6 +41,11 @@ if [[ -a "${ZDOTDIR:-$HOME}/.environment" ]]; then
   source "${ZDOTDIR:-$HOME}/.environment"
 fi
 
+if [ -x "${HOME}/.atuin/bin/atuin" ]; then
+  path=("${HOME}/.atuin/bin" $path)
+  export PATH
+fi
+
 # Tell things to sort by C
 export LC_COLLATE=C
 
