@@ -76,3 +76,55 @@ if (( $+commands[dotnet] )); then
 
   compdef _dotnet_zsh_complete dotnet
 fi
+
+if (( $+commands[aws] )); then
+    autoload bashcompinit && bashcompinit
+    #autoload -Uz compinit && compinit
+
+    complete -C '/usr/bin/aws_completer' aws
+fi
+
+# Display a file and directory tree optimized for use with LLMs
+#treeclean() {
+#  find . -type d \( \
+#    -name bin -o \
+#    -name obj -o \
+#    -name dist -o \
+#    -name dist-newstyle -o \
+#    -name node_modules -o \
+#    -name .git -o \
+#    -name .cache -o \
+#    -name .stack-work -o \
+#    -name __pycache__ \
+#  \) -prune -o -print 2>/dev/null |
+#    sort |
+#    sed -e 's|[^/]*/|  |g' \
+#        -e 's|  \([^ ]\)|└─\1|' \
+#        -e 's|  |│ |g' \
+#        -e 's|│ |  |g'
+#}
+treeclean() {
+  # Default directories to always prune
+  local defaults=( bin obj dist dist-newstyle node_modules .git .cache .stack-work __pycache__ )
+
+  # Add user-provided ones (if any)
+  local prune_dirs=( "${defaults[@]}" "${@}" )
+
+  # Build the find condition dynamically
+  local cond=""
+  for d in "${prune_dirs[@]}"; do
+    [[ -n $cond ]] && cond+=" -o"
+    cond+=" -name '$d'"
+  done
+
+  # If no directories to prune at all (should never happen), just print everything
+  [[ -z $cond ]] && { find . -print | sort; return; }
+
+  # Run find + pretty tree
+  eval "find . -type d \( $cond \) -prune -o -print" 2>/dev/null |
+    sort |
+    sed -e 's|[^/]*/|  |g' \
+        -e 's|  \([^ ]\)|└─\1|' \
+        -e 's|  |│ |g' \
+        -e 's|│ |  |g'
+}

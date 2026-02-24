@@ -13,8 +13,6 @@ fi
 if (( $+commands[bat] )); then
   # use bat for man pages
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-  # use seti-classic theme for bat
-  export BAT_THEME="seti-classic-vscode"
 fi
 
 if [[ -a "${ZDOTDIR:-$HOME}/.proxy" ]]; then
@@ -26,9 +24,14 @@ if (( $+commands[emacs] )); then
   export PATH
 fi
 
+if [ -d "${ZDOTDIR:-$HOME}/.cabal" ]; then
+    path=("${ZDOTDIR:-$HOME}/.cabal/bin" $path)
+    export PATH
+fi
+
 if [ -d "${ZDOTDIR:-$HOME}/.ghcup" ]; then
-  path+=("${ZDOTDIR:-$HOME}/.ghcup/bin")
-  export PATH
+    path=("${ZDOTDIR:-$HOME}/.ghcup/bin" $path)
+    export PATH
 fi
 
 if [ -d "${ZDOTDIR:-$HOME}/.dotnet/tools" ]; then
@@ -43,9 +46,3 @@ fi
 
 # Tell things to sort by C
 export LC_COLLATE=C
-
-if (( $+commands[delta] )); then
-  function diff() {
-    cat "$1" | delta
-  }
-fi

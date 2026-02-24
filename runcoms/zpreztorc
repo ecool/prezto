@@ -41,6 +41,7 @@ zstyle ':prezto:load' pmodule \
   'node' \
   'git' \
   'python' \
+  'ollama' \
   'history-substring-search' \
   'prompt'
 
