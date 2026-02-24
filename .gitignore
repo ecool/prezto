@@ -5,3 +5,6 @@ contrib
 
 # vscode
 .vscode/
+
+# JetBrains
+.idea/
