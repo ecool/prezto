@@ -76,3 +76,7 @@ if (( $+commands[dotnet] )); then
 
   compdef _dotnet_zsh_complete dotnet
 fi
+
+if [ -x "${HOME}/.atuin/bin/atuin" ]; then
+  eval "$(atuin init zsh)"
+fi
