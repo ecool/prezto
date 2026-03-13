@@ -26,18 +26,34 @@ if (( $+commands[emacs] )); then
   export PATH
 fi
 
-if [ -d "${ZDOTDIR:-$HOME}/.ghcup" ]; then
-  path+=("${ZDOTDIR:-$HOME}/.ghcup/bin")
+## Haskell Development
+
+# cabal
+if [ -d "${ZDOTDIR:-$HOME}/.cabal" ]; then
+  # prepend before `/usr/bin` so it prefers user level over system level
+  path=("${ZDOTDIR:-$HOME}/.cabal/bin" $path)
   export PATH
 fi
 
+# ghcup
+if [ -d "${ZDOTDIR:-$HOME}/.ghcup" ]; then
+  # prepend before `/usr/bin` so it prefers user level over system level
+  path=("${ZDOTDIR:-$HOME}/.ghcup/bin" $path)
+  export PATH
+fi
+
+## .NET Development
+
+# dotnet
 if [ -d "${ZDOTDIR:-$HOME}/.dotnet/tools" ]; then
   path+=("${ZDOTDIR:-$HOME}/.dotnet/tools")
   export PATH
 fi
 
+## Local Environment
+
+# source system specific environment variables and computer specific configuration
 if [[ -a "${ZDOTDIR:-$HOME}/.environment" ]]; then
-  # source system specific environment variables and computer specific configuration
   source "${ZDOTDIR:-$HOME}/.environment"
 fi
 
