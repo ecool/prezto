@@ -90,3 +90,5 @@ if (( $+commands[jetbrains-toolbox] )); then
     $path
   )
 fi
+
+export PATH
