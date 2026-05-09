@@ -80,3 +80,5 @@ fi
 if [ -x "${HOME}/.atuin/bin/atuin" ]; then
   eval "$(atuin init zsh)"
 fi
+
+export PATH="$PATH:$HOME/.local/bin"
