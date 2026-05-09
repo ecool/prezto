@@ -84,5 +84,8 @@ export XDG_RUNTIME_DIR="/run/user/$UID"
 
 if (( $+commands[jetbrains-toolbox] )); then
   # Added by Toolbox App
-  export PATH="$PATH:/home/ecool/.local/share/JetBrains/Toolbox/scripts"
+  path=(
+    $HOME/.local/share/JetBrains/Toolbox/scripts(N)
+    $path
+  )
 fi
