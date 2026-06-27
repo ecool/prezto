@@ -7,25 +7,23 @@
 
 # Load dependencies.
 # The 'editor' module is required because autosuggestions uses some of its
-# key binding infrastructure (key_info array).
+# key binding infrastructure.
 pmodload 'editor'
 
-# Source the autosuggestions plugin from the external directory.
-# This is the core line that actually enables the Fish-style autosuggestions feature.
+# Source the autosuggestions plugin.
+# This line actually enables the autosuggestions feature.
 source "${0:h}/external/zsh-autosuggestions.zsh" || return 1
 
 #
 # Highlighting configuration
 #
 
-# Set the highlight color for the suggestion (ghost text).
-# This zstyle allows users to customize the color via .zpreztorc if desired.
-# Default is 'fg=8' (subtle gray) if not overridden.
+# Allow users to customize the suggestion color via zstyle.
+# Falls back to subtle gray (fg=8) if not set.
 zstyle -s ':prezto:module:autosuggestions:color' found \
   'ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE' || ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
-# Disable highlighting entirely if the user has set:
-#   zstyle ':prezto:module:autosuggestions' color 'no'
+# Respect user's choice to disable color highlighting.
 if ! zstyle -t ':prezto:module:autosuggestions' color; then
   ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=''
 fi
@@ -34,10 +32,13 @@ fi
 # Key bindings
 #
 
-# These bindings are needed so that users can accept the autosuggestion.
-# Without them, there would be no easy way to accept the gray suggestion text.
-if [[ -n "$key_info" ]]; then
-  # Accept the full autosuggestion (equivalent to Right Arrow in many setups)
-  bindkey -M viins "$key_info[Control]F" vi-forward-word
-  bindkey -M viins "$key_info[Control]E" vi-add-eol
-fi
+# Ctrl + Right Arrow → Accept the full autosuggestion
+bindkey '^[[1;5C' autosuggest-accept
+
+# Ctrl + Alt + Right Arrow → Accept only the next word of the suggestion
+# (very useful for granular control)
+bindkey '^[[1;7C' vi-forward-word
+
+# Fallback bindings (work in most environments)
+bindkey '^F' autosuggest-accept          # Ctrl+F
+bindkey '^[f' vi-forward-word            # Alt+f
