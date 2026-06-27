@@ -1,67 +1,62 @@
 # Autosuggestions
 
-Integrates the actively maintained [zsh-users/zsh-autosuggestions][1] into Prezto.
-This provides Fish shell-style autosuggestions: as you type, Zsh shows
-"ghost text" suggestions based on your command history and completions.
+Integrates [zsh-autosuggestions][1] into Prezto, which implements the
+[Fish shell][2]'s autosuggestions feature, where the user can type in any part
+of a previously entered command and Zsh suggests commands as you type based on
+history and completions.
 
-If this module is used in conjunction with the [`syntax-highlighting`](../syntax-highlighting#readme)
-module, this module must be loaded **after** `syntax-highlighting`.
+If this module is used in conjunction with the [_`syntax-highlighting`_][3]
+module, this module must be loaded _after_ the _`syntax-highlighting`_ module.
 
-If you also use `history-substring-search`, load it **before** `autosuggestions`.
+Additionally, if this module is used in conjunction with the
+[_`history-substring-search`_][4] module, this module must be loaded _after_ the
+_`history-substring-search`_ module as well.
 
-Recommended module load order:
+To elaborate, the relative order of loading the modules would be
+_`syntax-highlighting`_, _`history-substring-search`_ and _`autosuggestions`_.
 
-```sh
-zstyle ':prezto:load' pmodule \
-  ...
-  'syntax-highlighting' \
-  'history-substring-search' \
-  'autosuggestions' \
-  ...
-```
+## Contributors
+
+New features and bug fixes should be submitted to the [zsh-autosuggestions][1]
+project according to its rules and regulations. This module will be synchronized
+against it.
 
 ## Settings
 
 ### Highlighting
 
-To enable color highlighting for suggestions:
+If colors are enabled, _autosuggestions_ will automatically highlight
+positive results.
+
+To enable highlighting for this module only, add the following line to
+_`${ZDOTDIR:-$HOME}/.zpreztorc`_:
 
 ```sh
 zstyle ':prezto:module:autosuggestions' color 'yes'
 ```
 
-To customize the highlight color (default is a subtle gray `fg=8`):
+To set the query found color, add the following line to
+_`${ZDOTDIR:-$HOME}/.zpreztorc`_:
 
 ```sh
-zstyle ':prezto:module:autosuggestions:color' found 'fg=cyan'
+zstyle ':prezto:module:autosuggestions:color' found ''
 ```
-
-### Strategy
-
-By default this module uses `history completion` (very Fish-like).
-You can override it in your `.zpreztorc`:
-
-```sh
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-# or: match_prev_cmd, etc.
-```
-
-## Key Bindings
-
-- **Right Arrow** or **Ctrl+F**: Accept the full suggestion
-- **Ctrl+Right** or **Alt+f**: Accept only the next word of the suggestion
 
 ## Troubleshooting
 
-### Autosuggestions from previous sessions don't appear
+### Autosuggestions from previous sessions don't show up
 
-Make sure the `history` module is also enabled in Prezto.
+For autosuggestions from previous shell sessions to work, please make sure you
+also have the `history` module enabled.
 
 ## Authors
 
-*The authors of this module should be contacted via the issue tracker.*
+_The authors of this module should be contacted via the [issue tracker][5]._
 
-- Original: [Sorin Ionescu](https://github.com/sorin-ionescu)
-- Improvements in ecool/prezto fork
+- [Sorin Ionescu](https://github.com/sorin-ionescu)
 
-[1]: https://github.com/zsh-users/zsh-autosuggestions
+[1]: https://github.com/tarruda/zsh-autosuggestions
+[2]: https://fishshell.com
+[3]: ../syntax-highlighting#readme
+[4]: ../history-substring-search#readme
+[5]: https://github.com/sorin-ionescu/prezto/issues
